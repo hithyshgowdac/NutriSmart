@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 70%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #5B42F3; 
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            color: #333; 
+        }
+
+        .form-group input::placeholder {
+            color: #888; 
+        }
+
+        .form-group input:focus {
+            border-color: #AF40FF;
+            box-shadow: 0 0 5px rgba(175, 64, 255, 0.5);
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        button:hover {
+            background: linear-gradient(144deg, #00DDEB, #5B42F3 50%, #AF40FF);
+        }
+
+        .alert {
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f8d7da;
+            color: #721c24;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #721c24;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <span><strong>Message:</strong> {{ message }}</span>
+            <button type="button" class="close" onclick="closeAlert(this)"
+            style="width: 5px; height: 5px;">&times;</button>
+        </div>
+        {% endfor %}
+
+        <h1>Sign In</h1>
+
+        <form method="post" action="/signin">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username" required>
+            </div>
+            <div class="form-group">
+                <label for="pass1">Password</label>
+                <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Your Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+    </div>
+
+    <script>
+        function closeAlert(button) {
+            const alert = button.closest('.alert');
+            alert.classList.add('hidden');
+            setTimeout(() => alert.remove(), 300);
+        }
+    </script>
+
+</body>
+</html>
